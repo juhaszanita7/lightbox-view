@@ -13,7 +13,7 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     this.http.get("https://api.unsplash.com/photos/?client_id=4909d16f6161e76ffa153626ebe2f9ca1203ce0d61d66d28c319821ccaaa8fdd")
-      .subscribe((result) => {
+      .subscribe(result => {
         console.info("request sent");
         this.data = result;
       }, () => {

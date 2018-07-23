@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Photo } from '../models/photo';
 
 @Component({
   selector: 'app-root',
@@ -7,23 +8,22 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  data;
-  nextPhotoIndex;
-  prevPhotoIndex;
+  data: Photo[];
+  nextPhotoIndex: number;
+  prevPhotoIndex: number;
 
   constructor(private http: HttpClient) {
     this.http.get("https://api.unsplash.com/photos/?client_id=4909d16f6161e76ffa153626ebe2f9ca1203ce0d61d66d28c319821ccaaa8fdd")
-      .subscribe(result => {
-        console.info("request sent");
+      .subscribe((result: Photo[]) => {
         this.data = result;
-      }, () => {
-        console.error("bad request");
+      }, (error) => {
+        alert("Oops, something went wrong.. \n" + "Error: " + error.name + "\n" + "Status: " + error.status);
       });
   }
 
-  openModal(index) {
+  openModal(photoIndex: number) {
     document.getElementById('lightboxModal').style.display = "block";
-    this.showSlides(index);
+    this.showPhoto(photoIndex);
   }
 
   closeModal() {
@@ -31,34 +31,28 @@ export class AppComponent {
   }
 
   slideToPrev() {
-    this.showSlides(this.prevPhotoIndex);
+    this.showPhoto(this.prevPhotoIndex);
   }
 
   slideToNext() {
-    this.showSlides(this.nextPhotoIndex);
+    this.showPhoto(this.nextPhotoIndex);
   }
 
-  showSlides(n) {
+  showPhoto(photoIndex: number) {
     let slides = document.getElementsByClassName("lightbox-slides") as HTMLCollectionOf<HTMLElement>;
     let captionText = document.getElementById("caption");
-    let captionTextAuthor = this.data[n].user.name ?  this.data[n].user.name : "Unknown";
+    let captionTextAuthor = this.data[photoIndex].user.name ? this.data[photoIndex].user.name : "Unknown";
 
-    if (n === 0) {
-      this.prevPhotoIndex = slides.length - 1;
-      this.nextPhotoIndex = 1;
-    } else if (n === slides.length - 1) {
-      this.prevPhotoIndex = slides.length - 2;
-      this.nextPhotoIndex = 0;
-    } else {
-      this.prevPhotoIndex = n - 1;
-      this.nextPhotoIndex = n + 1;
-    }
+    const length = this.data.length;
+
+    this.nextPhotoIndex = (photoIndex + 1) % length;
+    this.prevPhotoIndex = (photoIndex + length - 1) % length;
 
     for (let i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";
     }
 
-    slides[n].style.display = "block";
+    slides[photoIndex].style.display = "block";
     captionText.innerHTML = "Photo by: " + captionTextAuthor;
   }
 }

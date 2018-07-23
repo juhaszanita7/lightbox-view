@@ -1,5 +1,7 @@
 # Lightbox
 
+Showing photos in a lightbox view using Unsplash's public API with the ability to go to the next or the previous photo.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
 ## Development server

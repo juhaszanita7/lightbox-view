@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 col-md-3 image-container" *ngFor="let item of data; index as i" (click)="openModal(i)">
+    <div class="col-sm-6 col-md-3 col-lg-4 image-container" *ngFor="let item of data; index as i" (click)="openModal(i)">
       <img src="{{item.urls.thumb}}" alt="{{i}}">
       <span class="overlay"></span>
     </div>

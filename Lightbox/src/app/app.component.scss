@@ -1,5 +1,4 @@
 $modal-background-color: #000;
-$img-box-shadow: 0px 0px 10px 0px rgba(64,64,64,1);
 
 @mixin transition($transition) {
     -moz-transition:    $transition;
@@ -8,10 +7,37 @@ $img-box-shadow: 0px 0px 10px 0px rgba(64,64,64,1);
     transition:         $transition;
 }
 
-@mixin box-shadow($prop) {
-    -webkit-box-shadow: $prop;
-    -moz-box-shadow: $prop;
-    box-shadow: $prop;
+header {
+    text-align: center;
+    font-size: 27px;
+    color: #919191;
+}
+
+.image-container {
+    cursor: pointer;
+    position: relative;
+    height: 10vh;
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    img {
+        width: 100%;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 15px;
+        right: 15px;
+        background-color: black;
+        opacity: 0;
+        @include transition(opacity .3s ease-in-out);
+    }
+
+    &:hover .overlay {
+        opacity: .4;
+    }
 }
 
 .modal {
@@ -94,12 +120,4 @@ $img-box-shadow: 0px 0px 10px 0px rgba(64,64,64,1);
             color: white;
         }
       }
-  }
-  
-  img.hover-shadow {
-    @include transition(box-shadow .3s ease-in-out);
-  }
-  
-  .hover-shadow:hover {
-      @include box-shadow($img-box-shadow);
   }

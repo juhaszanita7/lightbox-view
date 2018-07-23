@@ -1,9 +1,10 @@
-<header>Search results</header>
+<header class="mb-3">Search results</header>
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 col-md-3" *ngFor="let item of data; index as i">
-      <img src="{{item.urls.thumb}}" alt="{{i}}" (click)="openModal(i)" class="hover-shadow">
+    <div class="col-sm-6 col-md-3 image-container" *ngFor="let item of data; index as i" (click)="openModal(i)">
+      <img src="{{item.urls.thumb}}" alt="{{i}}">
+      <span class="overlay"></span>
     </div>
   </div>
 </div>
